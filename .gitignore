@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+.venv/
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# OpenCode
+.opencode/
+.caveman-active
+
+# Temp
+/tmp/

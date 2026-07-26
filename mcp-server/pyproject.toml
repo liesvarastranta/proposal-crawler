@@ -1,0 +1,24 @@
+[project]
+name = "proposal-crawler-mcp"
+version = "0.1.0"
+description = "MCP server for crawling research funding proposals"
+requires-python = ">=3.12"
+dependencies = [
+    "crawl4ai>=0.5.0",
+    "firecrawl-py>=2.0.0",
+    "mcp>=1.0.0",
+    "pyyaml>=6.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]

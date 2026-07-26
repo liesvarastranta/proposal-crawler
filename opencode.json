@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ],
+  "mcp": {
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,agent_run",
+      "headers": {
+        "x-api-key": "5d566022-d336-460b-a270-d73811b4f9c5"
+      },
+      "enabled": true
+    }
+  }
+}
