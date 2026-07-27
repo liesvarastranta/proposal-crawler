@@ -1,0 +1,69 @@
+sources:
+  - name: BRIN
+    type: kementerian
+    base_url: "https://brin.go.id"
+    search_queries:
+      - "BRIN pendanaan riset proposal 2025 2026"
+      - "BRIN hibah penelitian skema pendanaan"
+      - "BRIN call for proposal research grant"
+    crawl_policy:
+      max_pages: 10
+      delay_seconds: 2
+      timeout_seconds: 30
+      max_retries: 3
+      user_agents:
+        - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/149.0.0.0"
+        - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/148.0.0.0"
+    extraction:
+      title_selector: "h1, h2.entry-title, .post-title"
+      content_selector: "article, .entry-content, .post-content, main"
+
+  - name: LPDP
+    type: kementerian
+    base_url: "https://lpdp.kemenkeu.go.id"
+    search_queries:
+      - "LPDP pendanaan riset 2025 2026"
+      - "LPDP beasiswa riset proposal penelitian"
+    crawl_policy:
+      max_pages: 10
+      delay_seconds: 2
+      timeout_seconds: 30
+      max_retries: 3
+      user_agents: []
+    extraction:
+      title_selector: "h1, h2.entry-title, .post-title"
+      content_selector: "article, .entry-content, .post-content, main"
+
+  - name: Kemendikbud
+    type: kementerian
+    base_url: "https://kemdikbud.go.id"
+    search_queries:
+      - "Kemendikbud matching fund proposal penelitian 2025"
+      - "Kemendikbud hibah riset universitas politeknik"
+      - "kedaireka pendanaan riset 2025 2026"
+    crawl_policy:
+      max_pages: 10
+      delay_seconds: 2
+      timeout_seconds: 30
+      max_retries: 3
+      user_agents: []
+    extraction:
+      title_selector: "h1, h2.entry-title, .post-title"
+      content_selector: "article, .entry-content, .post-content, main"
+
+default_policy:
+  max_pages: 10
+  delay_seconds: 2
+  timeout_seconds: 30
+  max_retries: 3
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/149.0.0.0"
+    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/148.0.0.0"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+
+skip_patterns:
+  - "captcha"
+  - "login"
+  - "signin"
+  - "daftar"
+  - "register"
