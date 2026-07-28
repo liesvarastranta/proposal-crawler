@@ -1,11 +1,22 @@
 import hashlib
 import logging
+import re
 
 from .db import get_db
 
 logger = logging.getLogger(__name__)
 
-BM25_DEDUP_THRESHOLD = -5.0
+STOPWORDS = {"dan", "di", "ke", "dari", "untuk", "yang", "dengan", "ini",
+             "itu", "pada", "adalah", "akan", "telah", "sudah", "dalam",
+             "oleh", "atau", "sebagai", "tentang", "setelah", "serta",
+             "secara", "melalui", "antara", "namun", "juga", "the", "for",
+             "and", "of", "to", "in", "is", "on", "at", "by", "with", "a",
+             "an"}
+
+
+def _extract_keywords(text: str) -> list[str]:
+    words = re.findall(r"[a-zA-Z0-9]+", text.lower())
+    return [w for w in words if len(w) > 2 and w not in STOPWORDS]
 
 
 def search_proposals(query: str, top_n: int = 5) -> list[dict]:
@@ -55,19 +66,20 @@ def check_duplicate(title: str, url: str) -> bool:
     if row:
         return True
 
-    rows = db.execute(
-        """
-        SELECT bm25(proposals_fts) AS score
-        FROM proposals_fts
-        WHERE proposals_fts MATCH ?
-        ORDER BY score
-        LIMIT 1
-        """,
-        (title,),
-    ).fetchall()
+    keywords = _extract_keywords(title)
+    if not keywords:
+        return False
 
-    if rows and rows[0]["score"] is not None and rows[0]["score"] < BM25_DEDUP_THRESHOLD:
-        return True
+    all_titles = db.execute("SELECT title FROM proposals").fetchall()
+    for row in all_titles:
+        existing_kw = _extract_keywords(row["title"])
+        if not existing_kw:
+            continue
+        intersection = len(set(keywords) & set(existing_kw))
+        union = len(set(keywords) | set(existing_kw))
+        jaccard = intersection / union if union > 0 else 0
+        if jaccard > 0.7:
+            return True
 
     return False
 
